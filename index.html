@@ -1,52 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const mangaID = 'f98660a1-d2e2-461c-960d-7bd13df8b76d';
 
-    <title>GET, POST, PUT, DELETE example</title>
+        const baseUrl = 'https://api.mangadex.org';
 
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+          (async () => {
+          const resp = await axios({
+              method: 'GET',
+              url: `${baseUrl}/manga/${mangaID}/feed`
+          });
 
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <py-config>
-      [[fetch]]
-      files = ["/request.py"]
-    </py-config>
+          console.log(resp.data.data.map(chapter => chapter.id));
+      })();
+      </script>
   </head>
 
-  <body><p>
-    Hello world request example! <br>
-    Here is the output of your request:
-    </p>
-    <py-script>
-        import asyncio
-        import json
-        from request import request  # import our request function.
-
-        async def main():
-            baseurl = "https://www.google.com"
-
-            # GET
-            headers = {"Access-Control-Allow-Origin" : "*"}
-            response = await request(f"{baseurl}", method="GET", headers=headers)
-            print(f"GET request=> status:{response.status}, json:{await response.json()}")
-
-        asyncio.ensure_future(main())
-    </py-script>
-
-    <div>
-    <p>
-        You can also use other methods. See fetch documentation: <br>
-        https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
-    </p>
-    </div>
-    <div>
-        <p>
-        See pyodide documentation for what to do with a FetchResponse object: <br>
-        https://pyodide.org/en/stable/usage/api/python-api.html#pyodide.http.FetchResponse
-        </p>
-    </div>
+  <body>
   </body>
 </html>
